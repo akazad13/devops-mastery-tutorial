@@ -113,6 +113,12 @@ npm run preview
 
 ---
 
+## 🤖 AI-Driven Development & Contributing
+
+Autonomous coding agents (Antigravity, Cursor, Claude Code, GitHub Copilot) operating in this repository must consult [AGENTS.md](AGENTS.md) for curriculum content invariants (`src/curriculum.js`), markdown rendering rules, and build validation commands.
+
+---
+
 ## 👤 Author
 
 **Md. Abul Kalam**
