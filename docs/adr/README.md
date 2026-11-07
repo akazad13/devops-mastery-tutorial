@@ -10,6 +10,7 @@ For more details on the ADR process, see [ADR-001](0001-record-architecture-deci
 | :--- | :--- | :--- | :--- | :--- |
 | [ADR-001](0001-record-architecture-decisions.md) | Record Architecture Decisions | **Accepted** | 2026-11-07 | Adopt Architecture Decision Records (ADRs) to document key technical decisions in `docs/adr/`. |
 | [ADR-002](0002-vite-frontend-and-dependency-modernization.md) | Vite Frontend and Dependency Modernization | **Accepted** | 2026-11-07 | Modernize build toolchain and runtime to Vite 8, React 19, React Router v7, and React Markdown 10. |
+| [ADR-003](0003-testing-paradigm-and-agentic-verification.md) | Testing Paradigm and Agentic Verification | **Accepted** | 2026-11-07 | Codify curriculum schema integrity, fast build validation, AST sanitization, and offline determinism for agentic workflows. |
 
 ## Lifecycle of an ADR
 

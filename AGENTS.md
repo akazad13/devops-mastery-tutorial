@@ -42,11 +42,12 @@ This document provides mandatory guidance for autonomous AI coding agents (Antig
 
 ## 3. Architecture Decision Records (ADRs)
 
-All major architectural and toolchain choices are documented under [`docs/adr/`](docs/adr/README.md):
+All major architectural, toolchain, and testing choices are documented under [`docs/adr/`](docs/adr/README.md):
 - [ADR-001: Record Architecture Decisions](docs/adr/0001-record-architecture-decisions.md) — Establishes ADR process and conventions.
 - [ADR-002: Vite Frontend and Dependency Modernization](docs/adr/0002-vite-frontend-and-dependency-modernization.md) — Adopts Vite 8, React 19, and modernized parsing/routing dependencies.
+- [ADR-003: Testing Paradigm and Agentic Verification](docs/adr/0003-testing-paradigm-and-agentic-verification.md) — Codifies curriculum schema validation, fast build verification, markdown AST sanitization, and offline determinism.
 
-Before introducing new frameworks, state managers, or build plugins, consult existing ADRs and document new proposals in `docs/adr/`.
+Before introducing new frameworks, state managers, build plugins, or changing verification pipelines, consult existing ADRs and document new proposals in `docs/adr/`.
 
 ---
 
@@ -59,7 +60,7 @@ npm install
 # Start local Vite development server
 npm run dev
 
-# Build production bundle
+# Build production bundle (Verification Gate)
 npm run build
 
 # Preview production build locally
@@ -68,9 +69,32 @@ npm run preview
 
 ---
 
-## 5. Verification Gates for AI Agents
+## 5. Testing Paradigm & Agentic Verification
 
-Before submitting code changes or finishing a turn:
-1. Run `npm run build` — must build with **0 errors**.
-2. Verify that phase navigation, markdown rendering, and local progress updates function correctly.
-3. Ensure all documentation and ADR references remain accurate and consistent.
+All autonomous agents must adhere to the testing paradigm codified in [ADR-003](docs/adr/0003-testing-paradigm-and-agentic-verification.md):
+
+### 1. Verification Layers
+- **Curriculum Schema & Data Integrity**:
+  - Every phase in `src/curriculum.js` must have valid metadata (`slug`, `number`, `title`, `summary`, `topics`, `days`).
+  - Content keys must resolve in `src/content.js`. Fallbacks to `# Content not found` are strictly invalid.
+  - Phase slugs must be unique, lowercase, hyphen-separated, and match routing expectations.
+- **Production Build Gate (`npm run build`)**:
+  - Vite 8 production build must succeed with **0 errors and 0 warnings**.
+  - All chunks (`vendor`, `highlighter`, `content`, `index`) must compile cleanly within ~200ms.
+- **Markdown AST Pipeline & Sanitization**:
+  - Markdown content must parse safely via `react-markdown` and `remark-gfm`.
+  - Registered Prism grammars in `src/components/Markdown.jsx` must support all code fence languages.
+  - Diagram ASCII blocks and `<Viz>` components must render deterministically.
+  - External links must enforce `target="_blank"` and `rel="noreferrer"`.
+
+### 2. Core Architectural Invariants
+- **Zero Runtime Console Errors**: No console warnings or uncaught exceptions during app mount, route changes, or theme/progress toggling.
+- **Deterministic Offline Rendering**: All assets, markdown text, and code styles must render with 100% functionality without internet access.
+- **Fast Feedback Loop**: Agentic verification gates must execute in sub-second time.
+
+### 3. Agent Verification Protocol (TDD Cycle)
+Before completing any task, modifying content, or committing code:
+1. **Red**: Identify the target behavior, failing state, or missing data contract.
+2. **Green**: Implement minimal, compliant changes adhering to decoupled data architectures.
+3. **Verify**: Execute `npm run build` and ensure zero errors across the bundle.
+4. **Docs Sync**: Ensure ADRs, `AGENTS.md`, and `README.md` remain accurate and synchronized.

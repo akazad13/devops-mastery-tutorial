@@ -15,6 +15,7 @@
 [Curriculum Phases](#-curriculum-phases) •
 [Tech Stack](#-tech-stack) •
 [Architecture & Decisions](#-architecture--decisions) •
+[Testing & Verification](#-testing--verification) •
 [Repository Layout](#-repository-layout) •
 [Quick Start](#-quick-start) •
 [License](#-license)
@@ -83,8 +84,20 @@ Key architectural principles:
 | :--- | :--- | :--- |
 | [ADR-001](docs/adr/0001-record-architecture-decisions.md) | Record Architecture Decisions | **Accepted** |
 | [ADR-002](docs/adr/0002-vite-frontend-and-dependency-modernization.md) | Vite Frontend and Dependency Modernization | **Accepted** |
+| [ADR-003](docs/adr/0003-testing-paradigm-and-agentic-verification.md) | Testing Paradigm and Agentic Verification | **Accepted** |
 
 For complete decision records and guidelines on proposing architectural changes, see the [ADR Index](docs/adr/README.md).
+
+---
+
+## 🧪 Testing & Verification
+
+The platform adheres to a fast, deterministic testing and validation paradigm codified in [ADR-003](docs/adr/0003-testing-paradigm-and-agentic-verification.md) per the `test-driven-development` engineering skill:
+
+- 📋 **Curriculum Schema & Data Integrity**: Structural validation of all 7 phase modules, topics, day checklists, and markdown bindings (`src/curriculum.js` & `src/content.js`). Eliminates dangling references or `# Content not found` fallbacks.
+- ⚡ **Sub-Second Build Validation**: Primary compile gate via Vite 8 (`npm run build`), verifying module transforms, asset bundling, and chunk generation in ~200ms.
+- 🛡️ **Markdown AST & Sanitization**: AST-level sanitization using `react-markdown` and `remark-gfm`, custom code block syntax highlighting (Prism), ASCII diagram detection, and automated external link security (`target="_blank"`, `rel="noreferrer"`).
+- 🔒 **Invariants**: Zero runtime console errors, deterministic offline rendering, and defensive `localStorage` persistence.
 
 ---
 
