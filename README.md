@@ -5,8 +5,8 @@
 ### Structured 9-week DevOps roadmap, hands-on tutorials, and interactive progress-tracking application
 
 [![CI Status](https://img.shields.io/github/actions/workflow/status/akazad13/devops-mastery-tutorial/ci.yml?branch=main&style=flat-square&logo=githubactions&logoColor=white)](https://github.com/akazad13/devops-mastery-tutorial/actions)
-[![React](https://img.shields.io/badge/React-18-61DAFB?style=flat-square&logo=react&logoColor=black)](https://react.dev/)
-[![Vite](https://img.shields.io/badge/Vite-5.0-646CFF?style=flat-square&logo=vite&logoColor=white)](https://vitejs.dev/)
+[![React](https://img.shields.io/badge/React-19-61DAFB?style=flat-square&logo=react&logoColor=black)](https://react.dev/)
+[![Vite](https://img.shields.io/badge/Vite-8.0-646CFF?style=flat-square&logo=vite&logoColor=white)](https://vitejs.dev/)
 [![Docker](https://img.shields.io/badge/Docker-Containers-2496ED?style=flat-square&logo=docker&logoColor=white)](https://www.docker.com/)
 [![Kubernetes](https://img.shields.io/badge/Kubernetes-K8s-326CE5?style=flat-square&logo=kubernetes&logoColor=white)](https://kubernetes.io/)
 [![License](https://img.shields.io/badge/License-MIT-blue?style=flat-square)](LICENSE)
@@ -14,6 +14,7 @@
 [Overview](#-overview) •
 [Curriculum Phases](#-curriculum-phases) •
 [Tech Stack](#-tech-stack) •
+[Architecture & Decisions](#-architecture--decisions) •
 [Repository Layout](#-repository-layout) •
 [Quick Start](#-quick-start) •
 [License](#-license)
@@ -62,10 +63,28 @@ flowchart LR
 
 | Domain | Technologies |
 | :--- | :--- |
-| **Frontend Framework** | React 18, React Router |
-| **Build Tool** | Vite 5 |
-| **Content & Rendering** | `react-markdown`, `remark-gfm`, `react-syntax-highlighter` |
+| **Frontend Framework** | React 19, React Router v7 |
+| **Build Tool** | Vite 8 |
+| **Content & Rendering** | `react-markdown` 10, `remark-gfm` 4, `react-syntax-highlighter` 16 |
 | **State Persistence** | Browser `localStorage` (theme and progress tracking) |
+
+---
+
+## 🏛 Architecture & Decisions
+
+The architecture and technical evolution of `devops-mastery-tutorial` are documented using **Architecture Decision Records (ADRs)** located in [`docs/adr/`](docs/adr/README.md).
+
+Key architectural principles:
+- **Zero-Backend Static SPA**: Compiled to purely static assets (`dist/`) suitable for instant deployment to any static host (GitHub Pages, Cloudflare Pages, Vercel) without server runtime dependencies.
+- **Client-Side Resilience**: Local progress tracking and theme preferences are stored in browser `localStorage` guarded by defensive `try/catch` wrappers.
+- **Curriculum Separation**: Tutorial content (`src/content.js`) and structural metadata (`src/curriculum.js`) are decoupled from layout and visual components.
+
+| ADR | Title | Status |
+| :--- | :--- | :--- |
+| [ADR-001](docs/adr/0001-record-architecture-decisions.md) | Record Architecture Decisions | **Accepted** |
+| [ADR-002](docs/adr/0002-vite-frontend-and-dependency-modernization.md) | Vite Frontend and Dependency Modernization | **Accepted** |
+
+For complete decision records and guidelines on proposing architectural changes, see the [ADR Index](docs/adr/README.md).
 
 ---
 
@@ -115,7 +134,7 @@ npm run preview
 
 ## 🤖 AI-Driven Development & Contributing
 
-Autonomous coding agents (Antigravity, Cursor, Claude Code, GitHub Copilot) operating in this repository must consult [AGENTS.md](AGENTS.md) for curriculum content invariants (`src/curriculum.js`), markdown rendering rules, and build validation commands.
+Autonomous coding agents (Antigravity, Cursor, Claude Code, GitHub Copilot) operating in this repository must consult [AGENTS.md](AGENTS.md) for curriculum content invariants, markdown rendering rules, and build validation commands. Architectural decisions and context must be referenced in [Architecture Decision Records](docs/adr/README.md).
 
 ---
 
